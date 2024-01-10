@@ -1,5 +1,5 @@
 const Name = ({x , deleteTheContact }) => {
-    console.log(x)
+    // console.log(x)
     return(
         <div>
             {x.name} {x.number} 

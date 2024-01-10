@@ -3,7 +3,7 @@ const Notification = ({msg}) => {
         return null
     }
     return(
-        <div className="taskState">
+        <div className="notificaiton">
             {msg}
         </div>
     )
