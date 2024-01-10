@@ -4,6 +4,7 @@ import Name from './components/name'
 import PersonForm from './components/PersonForm'
 import personServices from './services/person'
 import Notification from './components/Notification'
+import person from './services/person'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
@@ -13,7 +14,7 @@ const App = () => {
   const [notification , setNotification] = useState(null)
   
   useEffect( () => {
-    console.log('effect')
+    // console.log('effect')
     // const eventHandler = response => {
     //   console.log('promise fulfilled')
     //   setPersons(response.data)    
@@ -23,13 +24,27 @@ const App = () => {
     personServices.getAll().then(initialPersone => setPersons(initialPersone))
   },[])
 
+//useEffect for notificaiton
+
+  useEffect(() =>{
+    if(notification !== null){
+      console.log('Notification effect triggered')
+      const timeoutId = setTimeout(() => {
+        console.log('Notification timeout executed');
+        setNotification(null)
+      }, 5000)
+      return () => clearTimeout(timeoutId)
+
+    }
+  } , [notification])
+
 //event handler for submit
   const addName = (event) => {
     event.preventDefault()
-    console.log("event" , event)
-    console.log("target" , event.target)
-    console.log("target" , event.target.id)
-    console.log("target" , event.target.name)
+    // console.log("event" , event)
+    // console.log("target" , event.target)
+    // console.log("target" , event.target.id)
+    // console.log("target" , event.target.name)
     const isPresent = persons.some((person) => person.name === newName);
     const isNoSame = persons.some((person) => person.number === newNumber)
 
@@ -39,18 +54,18 @@ const App = () => {
         number : newNumber
       }
       personServices.create(nameObject).then(returnPerson => {
-        console.log("return data" , returnPerson)
-        console.log("data" , returnPerson.data)
+        // console.log("return data" , returnPerson)
+        // console.log("data" , returnPerson.data)
         setPersons(persons.concat(returnPerson))
         setNewName("")
         setNewNumber("")
       })
-
-
+      setNotification(`${nameObject.name} is added to contact`)
       // setPersons(persons.concat(nameObject))
       // setNewName("")
       // setNewNumber("")
     }
+//changing the no
     else if(isPresent && !isNoSame){
 //it is for changing the number
       if(window.confirm(`${newName} is already added to phonebook, replace the old number with new one ?`)){
@@ -62,6 +77,13 @@ const App = () => {
           setNewName("")
           setNewNumber("")
         })
+        .catch(error =>{
+          setNotification(`${person.name} is already remove`)
+          setNewName("")
+          setNewNumber("")
+        })
+        setNotification(`${person.name}'s no is changed to ${person.number} `)
+
       }
     }
     else{
@@ -79,25 +101,26 @@ const deleteTheContact = (x) =>{
       setPersons(persons.filter((x) => x.id !== id))
       console.log(`delete the contact info of ${response.data.name}`)
     })
+    setNotification(`${x.name} contact is delet`)
   }
 }
 
 
 //handle name change
   const handleNameChange = (event) =>{
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewName(event.target.value)
   }
 
 //handle number change
   const handleNumberchange = (event) => {
-    console.log(event.target.value)
+    // console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
 //handle search
   const handleSearch = (event) => {
-    console.log("searching for" , event.target.value.toLowerCase())
+    // console.log("searching for" , event.target.value.toLowerCase())
     setSearch(event.target.value.toLowerCase())
   }
 
