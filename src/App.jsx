@@ -26,7 +26,7 @@ const App = () => {
 //event handler for submit
   const addName = (event) => {
     event.preventDefault()
-    // console.log("event" , event)
+    console.log("event" , event)
     // console.log("target" , event.target)
     // console.log("target" , event.target.id)
     // console.log("target" , event.target.name)
@@ -45,7 +45,7 @@ const App = () => {
         setNewName("")
         setNewNumber("")
       })
-      
+
 
       // setPersons(persons.concat(nameObject))
       // setNewName("")
