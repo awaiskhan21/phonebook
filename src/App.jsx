@@ -27,9 +27,9 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     console.log("event" , event)
-    // console.log("target" , event.target)
-    // console.log("target" , event.target.id)
-    // console.log("target" , event.target.name)
+    console.log("target" , event.target)
+    console.log("target" , event.target.id)
+    console.log("target" , event.target.name)
     const isPresent = persons.some((person) => person.name === newName);
     const isNoSame = persons.some((person) => person.number === newNumber)
 
